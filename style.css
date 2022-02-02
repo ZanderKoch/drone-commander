@@ -1,0 +1,53 @@
+/*global variables*/
+:root{
+    --base-color: black;
+    --accent-color: white;
+}
+
+html{
+    margin: 0;
+    height: 100%;
+    background-color: var(--base-color);
+}
+
+body{
+    margin: 0;
+}
+
+div{
+    margin: 0;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+/*start of main rules*/
+main{
+    /*I want the main to be 3:4 for aesthetic reasons*/
+    width: calc((100vh / 3)*4);
+    min-height: 100vh;
+
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas: 
+        "radar players"
+        "radar controls";
+}
+
+#radar{
+    grid-area: radar;
+}
+
+#players{
+    grid-area: players;
+}
+
+#controls{
+    grid-area: controls;
+}
+
+
+/*end of main rules*/
