@@ -49,5 +49,11 @@ main{
     grid-area: controls;
 }
 
+#stick-canvas{
+    border-style: solid;
+    border-width: thin;
+    border-color: var(--accent-color);
+}
+
 
 /*end of main rules*/
