@@ -1,3 +1,7 @@
+//websocket connection
+let url;
+let ws;
+
 //radar canvas
 let radar;
 let radarCx;
@@ -24,6 +28,10 @@ let clientColor;
 
 
 function init(){
+    //websocket connection
+    url = "ws://localhost:8080/dronecommander/DronecommanderEndpoint";
+    ws = new WebSocket(url);
+    
     //radar canvas
     radar = document.querySelector("#radar-canvas");
     radarCx = radar.getContext("2d");
@@ -49,10 +57,12 @@ function init(){
     //setCanvasSizes();
     drawStick();
 
-    //event assignment
     stick.addEventListener("mousedown", e => grabStick(e));
     stick.addEventListener("mousemove", e => updateStick(e));
     stick.addEventListener("mouseup", unStick);
+    //stick.addEventListener("mouseout", unStick);
+
+    ws.addEventListener("message", e => receiveMessage(e))
 }
 
 function grabStick(event){
@@ -75,6 +85,7 @@ function updateStick(event){
         throttle = stickY / stickRadius
         
         drawStick();
+        send();
     }
 }
 
@@ -84,6 +95,22 @@ function unStick(){
         stickGrabbed = false;
     }
 }
+
+//network functions
+function receiveMessage(messageEvent){
+    if(stickGrabbed === false){
+        const data = JSON.parse(messageEvent.data);
+    
+        yaw = data.yaw;
+        throttle = data.throttle;
+        drawStick()  
+    }
+}
+
+function send(){
+    ws.send(`{"yaw":${yaw},"throttle":${throttle}}`);
+}
+
 
 //graphics functions//
 
@@ -117,13 +144,10 @@ function drawStick(){
     stickCx.stroke();
 
     //drawing a line from the center to the control point
-    console.log("yaw: " + yaw + " throttle: " + throttle)
-    console.log("radius: " + stickRadius)
-    
     stickCx.beginPath();
     stickCx.moveTo(0, 0);
     stickCx.lineTo(yaw * stickRadius, throttle * stickRadius);
     stickCx.stroke();
 }
 
-window.onload=init;
+window.onload = init;

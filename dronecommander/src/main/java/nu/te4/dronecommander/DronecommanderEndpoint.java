@@ -25,7 +25,8 @@ public class DronecommanderEndpoint{
     
     @OnMessage
     public void onMessage(String message){
-         Util.publish(sessions, message);
+        System.out.println("recieved message:" + message); 
+        Util.publish(sessions, message);
     }
     
     @OnOpen
