@@ -5,8 +5,8 @@ package nu.te4.dronecommander.StateEntities;
  * @author Zander Koch
  */
 public class Plane {
-    private float posX;
-    private float posY;
+    private double posX;
+    private double posY;
     private double heading; //rads
     private String color; //'#' followed by 6 digit hexadecimal
     
@@ -24,10 +24,7 @@ public class Plane {
     private float yaw = 0;
     private float throttle = 0;
 
-    public Plane(float posX, float posY, double heading, String color) {
-        this.posX = posX;
-        this.posY = posY;
-        this.heading = heading;
+    public Plane(String color) {
         this.color = color;
     }
     
@@ -68,4 +65,12 @@ public class Plane {
         
     }
     
+    
+    public void initialize(double angle, float distance){
+        this.posX = Math.cos(angle) * distance;
+        this.posY = Math.sin(angle) * distance;
+        this.heading = angle - Math.PI;
+        this.velocity = 0;
+        this.rotationRate = 0;
+    }
 }
