@@ -65,7 +65,12 @@ public class Plane {
         
     }
     
-    
+    /**
+     * initilizes plane, placing it at a specified angle and distance from 
+     * battlefield's center and facing the center
+     * @param angle
+     * @param distance 
+     */
     public void initialize(double angle, float distance){
         this.posX = Math.cos(angle) * distance;
         this.posY = Math.sin(angle) * distance;
@@ -73,4 +78,10 @@ public class Plane {
         this.velocity = 0;
         this.rotationRate = 0;
     }
+
+    public String getColor(){
+        return color;
+    }
+    
+    
 }

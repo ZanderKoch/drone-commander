@@ -16,16 +16,36 @@ public class State{
     }
     
     /**
-     * takes inputs sent from client and 
+     * !!TODO!!: implement
+     * takes inputs sent from client and updates the planes list appropriately
      * @param yaw
      * @param throttle
      * @param Color 
      */
     public void executeInputs(float yaw, float throttle, String Color){
         // check if plane with that color exists already
+        if(getPlane(Color) != null){
+            //if yes update said plane's yaw and throttle to those given
+            getPlane(Color).updateYaw(yaw);
+            getPlane(Color).updateThrottle(throttle);
+        }
         
-        //if yes update said plane's yaw and throttle to those given
+        
         
         //if no add plane, initialize all planes, and publish new state
+    }
+    
+    /**
+     * attempts to get a plane with specified color
+     * @param color the color of the plane to be searched for
+     * @return the plane with provided color if that exists, or a null object
+     */
+    private Plane getPlane(String color){
+        for (Plane plane : planes){
+            if(plane.getColor() == color){
+                return plane;
+            }
+        }
+        return null;
     }
 }
